@@ -3,8 +3,10 @@
     {"name":"Rooms","order":10,"path":"folders/Rooms.yy",},
   ],
   "ResourceOrderSettings":[
+    {"name":"oCamera","order":16,"path":"objects/oCamera/oCamera.yy",},
     {"name":"oPlayer","order":11,"path":"objects/oPlayer/oPlayer.yy",},
     {"name":"oWall","order":14,"path":"objects/oWall/oWall.yy",},
+    {"name":"general_funky_functions","order":15,"path":"scripts/general_funky_functions/general_funky_functions.yy",},
     {"name":"sPlayer","order":12,"path":"sprites/sPlayer/sPlayer.yy",},
     {"name":"sWall","order":13,"path":"sprites/sWall/sWall.yy",},
   ],

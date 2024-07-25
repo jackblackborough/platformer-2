@@ -1,10 +1,8 @@
-/// @description Insert description here
-// You can write your code in this editor
-rightKey = keyboard_check(vk_right);
-leftKey = keyboard_check(vk_left);
-jumpKeyPressed = keyboard_check_pressed(vk_space);
+//get contols
+get_controls();
 
 
+//moving
 moveDir = rightKey - leftKey;
 
 
@@ -27,19 +25,49 @@ xspd = moveDir*moveSpd;
 
 		x += xspd;
 		
+		
+	
 		//gravity
 		yspd += grav;
 		
-		if yspd > termVel{yspd = termVel}
 		
+		//reset jumping varibles
 		
+		if onGround{
+			
+		jumpCount = 0;	
+		}else{
+		if jumpCount == 0{jumpCount = 1; };	#
+		}
 		//jump
 		
-	if jumpKeyPressed&&place_meeting(x, y+1, oWall)	
+	if jumpKeyBuffered && jumpCount < jumpMax
 	{
-	yspd = jumpSpd;	
+	jumpKeyBuffered = false;
+	jumpKeyBufferTimer = 0;
+	jumpCount++;
+
+
+     jumpHoldTimer = jumpHoldFrames;
 	}
+	
+	if!jumpKey 
+	{
+	jumpHoldTimer = 0;	
+	}
+	
+	
+	
+	if jumpHoldTimer > 0
+	{
 		
+	yspd = jumpSpd;
+	jumpHoldTimer--;
+		
+	}
+	
+if yspd > termVel{yspd = termVel}
+			
 	var _subPixel = .5;
 	if place_meeting(x ,y + yspd, oWall)
 	{
@@ -53,4 +81,13 @@ xspd = moveDir*moveSpd;
 	   yspd = 0;
 	}
 	
+	
+	
+	if yspd >= 0 && place_meeting(x, y+1, oWall)
+	{	
+	onGround = true;	
+	}else{
+	onGround = false;
+	if jumpCount == 0{jumpCount = 1; };	
+	}
 	y += yspd;
