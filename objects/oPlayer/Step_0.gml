@@ -5,8 +5,11 @@ get_controls();
 //moving
 moveDir = rightKey - leftKey;
 
+if moveDir != 0{face = moveDir;}
 
 xspd = moveDir*moveSpd;
+
+
 
 // x collisions
 		var _subPixel = .5;
@@ -91,3 +94,21 @@ if yspd > termVel{yspd = termVel}
 	if jumpCount == 0{jumpCount = 1; };	
 	}
 	y += yspd;
+	
+	
+	
+	if abs(xspd) > 0{sprite_index = walkSpr}
+	
+	if xspd == 0{sprite_index = idleSpr;}
+	
+	if !onGround {sprite_index = jumpSpr;}
+	
+	
+	mask_index = idleSpr;
+	
+	
+	
+	
+	
+	
+	

@@ -6,8 +6,13 @@
     {"name":"oCamera","order":16,"path":"objects/oCamera/oCamera.yy",},
     {"name":"oPlayer","order":11,"path":"objects/oPlayer/oPlayer.yy",},
     {"name":"oWall","order":14,"path":"objects/oWall/oWall.yy",},
+    {"name":"ParticleSystem1","order":17,"path":"particles/ParticleSystem1/ParticleSystem1.yy",},
     {"name":"general_funky_functions","order":15,"path":"scripts/general_funky_functions/general_funky_functions.yy",},
     {"name":"sPlayer","order":12,"path":"sprites/sPlayer/sPlayer.yy",},
+    {"name":"sPlayerIdle","order":18,"path":"sprites/sPlayerIdle/sPlayerIdle.yy",},
+    {"name":"sPlayerJump","order":19,"path":"sprites/sPlayerJump/sPlayerJump.yy",},
+    {"name":"sPlayerRun","order":21,"path":"sprites/sPlayerRun/sPlayerRun.yy",},
+    {"name":"sPlayerWalk","order":20,"path":"sprites/sPlayerWalk/sPlayerWalk.yy",},
     {"name":"sWall","order":13,"path":"sprites/sWall/sWall.yy",},
   ],
 }
