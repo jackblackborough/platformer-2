@@ -16,7 +16,15 @@ xspd = moveDir*moveSpd;
 		if place_meeting(x + xspd, y, oWall)
 		{
 	
-	
+                     
+					 if !place_meeting(x + xspd, y - abs(xspd)-1, oWall)
+					 {
+					 
+						while place_meeting(x + xspd, y, oWall){y -= _subPixel}
+					 }else{
+					 
+					 
+					 
 			var _pixelCheck = _subPixel * sign(xspd);
 			while !place_meeting(x + _pixelCheck, y, oWall)
 			{
@@ -25,6 +33,8 @@ xspd = moveDir*moveSpd;
 	
 			xspd = 0;
 		}
+		
+						 }
 
 		x += xspd;
 		
@@ -95,19 +105,22 @@ if yspd > termVel{yspd = termVel}
 	}
 	y += yspd;
 	
-	
+
 	
 	if abs(xspd) > 0{sprite_index = walkSpr}
 	
 	if xspd == 0{sprite_index = idleSpr;}
 	
-	if !onGround {sprite_index = jumpSpr;}
+	if y != -1{
+	if !place_meeting(x, y +15, oWall)
+	{
 	
+	 {sprite_index = jumpSpr;}
 	
+	}
+	
+	}
 	mask_index = idleSpr;
-	
-	
-	
 	
 	
 	

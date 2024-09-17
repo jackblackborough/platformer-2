@@ -12,10 +12,10 @@ xspd = 0;
 yspd = 0;
 
 
-grav = .275;
+grav = .325;//.275
 termVel = 6;
 jumpSpd = -4.75;
-jumpMax = 5;
+jumpMax = 2;
 jumpCount = 0;
 jumpHoldTimer = 0;
 jumpHoldFrames = 6000;
