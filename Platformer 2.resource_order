@@ -24,6 +24,7 @@
     {"name":"ParticleSystem1","order":17,"path":"particles/ParticleSystem1/ParticleSystem1.yy",},
     {"name":"Room","order":2,"path":"rooms/Room/Room.yy",},
     {"name":"Room2","order":1,"path":"rooms/Room2/Room2.yy",},
+    {"name":"roominit","order":3,"path":"rooms/roominit/roominit.yy",},
     {"name":"general_funky_functions","order":15,"path":"scripts/general_funky_functions/general_funky_functions.yy",},
     {"name":"sCoin","order":40,"path":"sounds/sCoin/sCoin.yy",},
     {"name":"hearts","order":45,"path":"sprites/hearts/hearts.yy",},

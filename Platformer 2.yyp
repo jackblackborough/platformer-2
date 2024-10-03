@@ -42,6 +42,7 @@
     {"id":{"name":"Room","path":"rooms/Room/Room.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
     {"id":{"name":"Room2","path":"rooms/Room2/Room2.yy",},},
+    {"id":{"name":"roominit","path":"rooms/roominit/roominit.yy",},},
     {"id":{"name":"general_funky_functions","path":"scripts/general_funky_functions/general_funky_functions.yy",},},
     {"id":{"name":"sCoin","path":"sounds/sCoin/sCoin.yy",},},
     {"id":{"name":"hearts","path":"sprites/hearts/hearts.yy",},},
@@ -70,6 +71,7 @@
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
+    {"roomId":{"name":"roominit","path":"rooms/roominit/roominit.yy",},},
     {"roomId":{"name":"Room","path":"rooms/Room/Room.yy",},},
     {"roomId":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
     {"roomId":{"name":"Room2","path":"rooms/Room2/Room2.yy",},},
