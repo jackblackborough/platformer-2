@@ -23,3 +23,8 @@ onGround = true;
 playerHealth = 5;
 playerMaxHealth = 10;
 timer1 = 0; 
+
+// Moving platforms
+myFloorPlat = noone;
+moveplatXspd = 0;
+
