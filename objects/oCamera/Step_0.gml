@@ -1,5 +1,11 @@
 /// @description Insert description here
 // You can write your code in this editor
+if keyboard_check_pressed(vk_f8)
+{
+	window_set_fullscreen(!window_get_fullscreen());	
+}
+
+
 if !instance_exists(oPlayer) exit;
 
 var _camWidth = camera_get_view_width(view_camera[0]);
