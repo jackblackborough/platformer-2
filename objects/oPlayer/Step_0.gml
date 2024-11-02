@@ -1,15 +1,7 @@
 //get contols
 get_controls();
 
-if !instance_exists(oHeart)
-{
-	instance_create_depth(x+30, y, 50, oHeart);
-}
 
-
-
-
-oHeart.image_index = playerHealth;
 //moving
 moveDir = rightKey - leftKey;
 
@@ -38,10 +30,10 @@ if place_meeting(x + xspd, y, oWall)
 		}
 					 
 		var _pixelCheck = _subPixel * sign(xspd);
-		while !place_meeting(x + _pixelCheck, y, oWall)
-		{
+		while !place_meeting(x + _pixelCheck, y, oWall){x += _pixelCheck;}
+	
 			x += _pixelCheck;	
-		}
+		
 	
 		xspd = 0;
 	}			 
@@ -55,17 +47,33 @@ if yspd  >=0 && !place_meeting(x + xspd, y +1 , oWall) && place_meeting(x + xspd
 x += xspd;
 		
 //gravity
-yspd += grav;
+
+
+if coyoteHangTimer > 0
+{
+
+coyoteHangTimer--;	
+	
+}else{
+	
+	yspd += grav;
+	
+	setOnGround(false)
+	
+}
+
+
 		
 if onGround 
 {
 	jumpCount = 0;	
+	coyoteJumpTimer = coyoteJumpFrames;
+	jumpHoldTimer = 0;
 }
 else
 {
-	if jumpCount == 0{
-		jumpCount = 1; 
-	}	
+	coyoteJumpTimer--;
+	if jumpcount == 0 & coyoteJumpTimer <= 0 {jumpCount = 1;}
 }
 		
 if jumpKeyBuffered && jumpCount < jumpMax
@@ -88,35 +96,54 @@ if jumpHoldTimer > 0
 	jumpHoldTimer--;
 }
 	
-if yspd > termVel { yspd = termVel }
-			
-if place_meeting(x ,y + yspd, oWall)
-{
-	var _pixelCheck = _subPixel * sign(yspd);
+	yspd += grav;
 	
-	while !place_meeting(x, y + _pixelCheck, oWall)
+	
+if yspd > termVel { yspd = termVel }
+		
+var _subPixel = .5;
+		
+if yspd < 0 && place_meeting(x, y + yspd , oWall)
+{
+	var _slopeSlide = false
+			     
+	if moveDir == 0 && !place_meeting( x - abs(yspd)-1, y + yspd, oWall)
 	{
-		y += _pixelCheck;	
-	}
+		while place_meeting(x, y + yspd, oWall) { x -= 1; }; 
+		_slopeSlide = true;
+	} 
+				 
+	if moveDir == 0 && !place_meeting( x - abs(yspd)+1, y + yspd, oWall)
+	{
+		while place_meeting(x, y + yspd, oWall) { x += 1; }; 
+		_slopeSlide = true;
+	} 
+				 
+	if ! _slopeSlide
+	{
+		var _pixelCheck = _subPixel* sign(yspd)
+		while ! place_meeting(x, y + _pixelCheck, oWall)
+		{
+			y += _pixelCheck
+		}
+	} 
 	
 	yspd = 0;
 }
 		
-if yspd >= 0 && place_meeting(x, y+1, oWall)
-{	
-	onGround = true;	
-}
-else
-{
-	onGround = false;
-	
-	if jumpCount == 0{
-		jumpCount = 1; 
-	};	
-}
+// Floor y collision
+// Check for solid and semisolid platforms under me
+var _clampYspd = max(0 , yspd);
+var _list = ds_list_create();
+var _array = array_create(0);
+array_push(_array, oWall, oSemiSolidWall);
+
+// Do the actual check and add objects to list
+instance_place_list(x, y + 1 + _clampYspd + termVel, _array, _list, false);
+
 
 y += yspd;
-	
+		
 if abs(xspd) > 0{sprite_index = walkSpr}
 	
 if xspd == 0{sprite_index = idleSpr;}
@@ -138,6 +165,7 @@ if keyboard_check(ord("H") )
 	mask_index = sPlayerCrouch;		
 }
 	
+
 var _playerHealth = playerHealth
 	
 if playerHealth = 0
@@ -151,3 +179,10 @@ if playerHealth = playerMaxHealth
 {
 	playerHealth = playerMaxHealth;	
 }
+
+if !instance_exists(oHeart)
+{
+	instance_create_depth(x+30, y, 50, oHeart);
+}
+
+oHeart.image_index = playerHealth;
