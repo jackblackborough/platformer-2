@@ -48,21 +48,13 @@ x += xspd;
 		
 //gravity
 
-
 if coyoteHangTimer > 0
 {
-
-coyoteHangTimer--;	
-	
-}else{
-	
+	coyoteHangTimer--;		
+} else {
 	yspd += grav;
-	
-	setOnGround(false)
-	
+	setOnGround(false)	
 }
-
-
 		
 if onGround 
 {
@@ -73,7 +65,7 @@ if onGround
 else
 {
 	coyoteJumpTimer--;
-	if jumpcount == 0 & coyoteJumpTimer <= 0 {jumpCount = 1;}
+	if jumpCount == 0 && coyoteJumpTimer <= 0 { jumpCount = 1; }
 }
 		
 if jumpKeyBuffered && jumpCount < jumpMax
@@ -83,6 +75,7 @@ if jumpKeyBuffered && jumpCount < jumpMax
 	jumpCount++;
 
     jumpHoldTimer = jumpHoldFrames;
+	setOnGround(false)
 }
 	
 if !jumpKey 
@@ -139,21 +132,89 @@ var _array = array_create(0);
 array_push(_array, oWall, oSemiSolidWall);
 
 // Do the actual check and add objects to list
-instance_place_list(x, y + 1 + _clampYspd + termVel, _array, _list, false);
+var _listSize = instance_place_list(x, y + 1 + _clampYspd + moveplatMaxYspd, _array, _list, false);
 
+// Loop through the colliding instances and only return this instance if the top is below the player
+
+var playerBottom = bbox_bottom
+
+for (var _i = 0; _i < _listSize; _i++)
+{
+	// Get an instance of oWall or oSemiSolidWall from this list
+	var _listInst = _list[| _i];
+	
+	// Avoid magnetism
+	if (
+		(_listInst.yspd <= yspd || instance_exists(myFloorPlat)) && 
+		(_listInst.yspd > 0 || place_meeting(x, y + 1 + _clampYspd, _listInst))
+	)
+	{
+		if (
+			_listInst.object_index == oWall || 
+			object_is_ancestor(_listInst.object_index, oWall) ||
+			floor(bbox_bottom) <= ceil(_listInst.bbox_top - _listInst.yspd)
+		)
+		{
+			// Return the "highest" wall object
+			if (
+				!instance_exists(myFloorPlat) ||
+				_listInst.bbox_top + _listInst.yspd <= myFloorPlat.bbox_top + myFloorPlat.yspd || 
+				_listInst.bbox_top + _listInst.yspd <= bbox_bottom 
+			) 
+			{
+				myFloorPlat = _listInst;
+			}	
+		}
+	}
+}
+
+// Destroy the ds list
+ds_list_destroy(_list);
+
+// One last check to make sure the floor platform is actually below us
+if (
+	instance_exists(myFloorPlat) && 
+	!place_meeting(x, y + moveplatMaxYspd, myFloorPlat)
+)
+{
+	myFloorPlat = noone;
+}
+
+// Land on the ground platform if there is one
+if (instance_exists(myFloorPlat)) 
+{
+	var _subPixel = 0.5;
+	while (!place_meeting(x, y + _subPixel, myFloorPlat) && !place_meeting(x, y, oWall)) 
+	{
+		y += _subPixel;
+	}
+	
+	if (myFloorPlat.object_index = oSemiSolidWall || object_is_ancestor(myFloorPlat.object_index, oSemiSolidWall))
+	{
+		while (place_meeting(x, y, myFloorPlat)) 
+		{
+			y -= _subPixel;	
+		}
+	}
+	
+	y = floor(y);
+	
+	// Collide with the group
+	yspd = 0;
+	setOnGround(true);
+}
+	
 
 y += yspd;
 		
+
 if abs(xspd) > 0{sprite_index = walkSpr}
-	
+
 if xspd == 0{sprite_index = idleSpr;}
 	
-if y != -1
+if (yspd < 0 && onGround == false) 
 {
-	if !place_meeting(x, y +15, oWall)
-	{
-		sprite_index = jumpSpr;	
-	}	
+	sprite_index = jumpSpr;	
 }
 	
 mask_index = idleSpr;

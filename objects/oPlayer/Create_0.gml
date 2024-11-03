@@ -1,10 +1,16 @@
 function setOnGround(_val = true)
 {
-     if _val == true
-	 {
-	      onGround = true	 
-
-	 }
+	if (_val == true)
+	{
+		onGround = true;
+		coyoteHangTimer = coyoteHangFrames;
+	} 
+	else 
+	{
+		onGround = false;
+		myFloorPlat = noone;
+		coyoteHangTimer = 0;
+	}
 }
 
 ControlSetup();
@@ -20,9 +26,9 @@ moveSpd = 2;
 xspd = 0;
 yspd = 0;
 
-grav = .255;
-termVel = 4;
-jumpSpd = -8.5;
+grav = .285;
+termVel = 7;
+jumpSpd = -7.5;
 jumpMax = 1;
 jumpCount = 0;
 jumpHoldTimer = 0;
@@ -42,3 +48,4 @@ timer1 = 0;
 // Moving platforms
 myFloorPlat = noone;
 moveplatXspd = 0;
+moveplatMaxYspd = termVel;
