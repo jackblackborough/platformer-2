@@ -206,6 +206,8 @@ if (instance_exists(myFloorPlat))
 	
 
 y += yspd;
+
+// Snap myself to floor platform
 		
 
 if abs(xspd) > 0{sprite_index = walkSpr}
