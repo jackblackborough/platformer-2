@@ -199,7 +199,7 @@ if (instance_exists(myFloorPlat))
 	
 	y = floor(y);
 	
-	// Collide with the group
+	// Collide with the ground
 	yspd = 0;
 	setOnGround(true);
 }
