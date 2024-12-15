@@ -207,7 +207,58 @@ if (instance_exists(myFloorPlat))
 
 y += yspd;
 
+moveplatXspd = 0;
+if (instance_exists(myFloorPlat)) { 
+	moveplatXspd = myFloorPlat.xspd; 
+} 
+
+if (place_meeting(x + moveplatXspd, y, oWall)) 
+{
+	var _subPixel = 0.5;
+	var _pixelCheck = _subPixel * sign(moveplatXspd);
+	while (!place_meeting(x + _pixelCheck, y, oWall)) 
+	{
+		x += _pixelCheck;
+	}
+	
+	moveplatXspd = 0;
+}
+
+x += moveplatXspd;
+
 // Snap myself to floor platform
+if (instance_exists(myFloorPlat) && (
+		myFloorPlat.yspd != 0 || 
+		myFloorPlat.object_index == oSemiSolidMovePlat ||
+		object_is_ancestor(myFloorPlat.object_index, oSemiSolidMovePlat)
+	) 
+)
+{
+	if (
+		!place_meeting(x, myFloorPlat.bbox_top, oWall) && 
+		myFloorPlat.bbox_top >= bbox_bottom - moveplatMaxYspd 
+	) {
+		y = myFloorPlat.bbox_top;
+	}
+	
+	if (myFloorPlat.yspd < 0 && place_meeting(x, y + myFloorPlat.yspd, oWall)) 
+	{
+		if (myFloorPlat.object_index == oSemiSolidMovePlat || object_is_ancestor(myFloorPlat.object_index, oSemiSolidMovePlat)) {
+			var _subPixel = 0.25;
+			while (place_meeting(x, y + myFloorPlat.yspd, oWall)) {
+				y += _subPixel
+			}
+			
+			while (place_meeting(x, y, oWall)) {
+				y -= _subPixel
+			}
+			
+			y = round(y);
+		}
+		
+		setOnGround(false);
+	}
+}
 		
 
 if abs(xspd) > 0{sprite_index = walkSpr}
